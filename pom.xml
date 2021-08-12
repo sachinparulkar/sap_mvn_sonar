@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>sonar_test</groupId>
+  <artifactId>com.sonar.maven</artifactId>
+  <version>0.0.3-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>com.sonar.maven</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <sonar.host.url>http://34.86.51.193:9000</sonar.host.url>
+    <sonar.login>admin</sonar.login>
+    <sonar.password>admin123</sonar.password>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+   <dependency>
+     <groupId>org.owasp</groupId>
+     <artifactId>dependency-check-maven</artifactId>
+     <version>6.1.6</version>
+     <type>maven-plugin</type>
+    </dependency>
+    <dependency>
+      <groupId>us.springett</groupId>
+      <artifactId>threatmodel-sdk</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+  </dependencies>
+  
+  
+  <distributionManagement>
+    <snapshotRepository>
+       <id>nexus</id>
+      <!-- <url>http://34.72.104.220:8081/nexus/content/repositories/snapshots</url> -->
+           <url>http://34.86.51.193:8081/repository/maven-snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>nexus</id>
+      <url>http://34.121.10.13:8081/nexus/content/repositories/releases</url>
+    </repository>
+  </distributionManagement>
+  
+  <build>
+  <plugins>
+          <plugin>
+              <groupId>org.owasp</groupId>
+              <artifactId>dependency-check-maven</artifactId>
+              <version>6.2.2</version>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>check</goal>
+                      </goals>
+                  </execution>
+              </executions>
+            <configuration>  
+              <failBuildOnCVSS>11</failBuildOnCVSS>  
+              <!-- Generate all report formats -->  
+              <format>ALL</format>  
+              <!-- Don't use Nexus Analyzer -->  
+              <centralAnalyzerEnabled>false</centralAnalyzerEnabled>  
+              <!-- Am I the latest version? -->  
+              <versionCheckEnabled>true</versionCheckEnabled>  
+             </configuration>  
+            </plugin>
+  </plugins>
+  </build>  
+
+</project>
